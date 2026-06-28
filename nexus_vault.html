@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="my" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Vault | Premium Digital Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@300;400;700&display=swap');
+        body { font-family: 'Pyidaungsu', sans-serif; background-color: #ffffff; color: #1a1a1a; overflow-x: hidden; }
+        
+        /* ဤနေရာတွင် scroll-margin-top ကို 150px ထားပေးလိုက်ပါသည်၊ ၎င်းက အတိအကျ ရပ်တန့်စေရန် ကူညီပေးပါလိမ့်မည် */
+        #services { scroll-margin-top: 150px; }
+        #games { scroll-margin-top: 150px; }
+
+        .hero-full { height: 100vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1600'); background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
+        .card { background: #ffffff; border: 1px solid #f4f4f4; transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+        .card:hover { transform: scale(1.03); border-color: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .filter-active { background-color: #000; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header class="hero-full">
+        <h1 class="text-7xl md:text-[10rem] font-black tracking-tighter mb-2">NEXUS VAULT</h1>
+        <p class="text-gray-300 uppercase tracking-[0.5em] text-sm md:text-base mb-10">Digital Store</p>
+        <div class="flex gap-4">
+            <a href="#services" class="bg-white text-black px-10 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition">ဝန်ဆောင်မှုများ</a>
+            <a href="#games" class="border border-white text-white px-10 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-black transition">Game Collection</a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-8 py-20">
+        
+        <section id="services" class="mb-24" data-aos="fade-up">
+            <h2 class="text-3xl font-black uppercase tracking-tighter mb-12">ဝန်ဆောင်မှုများ</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="cd-keys.html" class="card p-8 rounded-3xl text-center block">
+                    <i class="fa-solid fa-key text-4xl mb-6 text-black"></i>
+                    <h3 class="font-bold uppercase text-xs mb-2">CD Keys</h3>
+                </a>
+                <a href="top-up.html" class="card p-8 rounded-3xl text-center block">
+                    <i class="fa-solid fa-wallet text-4xl mb-6 text-black"></i>
+                    <h3 class="font-bold uppercase text-xs mb-2">Game Top-up</h3>
+                </a>
+                <a href="apps.html" class="card p-8 rounded-3xl text-center block">
+                    <i class="fa-solid fa-mobile-screen-button text-4xl mb-6 text-black"></i>
+                    <h3 class="font-bold uppercase text-xs mb-2">Premium Apps</h3>
+                </a>
+                <a href="gift-cards.html" class="card p-8 rounded-3xl text-center block">
+                    <i class="fa-solid fa-gift text-4xl mb-6 text-black"></i>
+                    <h3 class="font-bold uppercase text-xs mb-2">Gift Cards</h3>
+                </a>
+            </div>
+        </section>
+
+        <section id="games" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+                <h2 class="text-3xl font-black uppercase tracking-tighter">Game Collection</h2>
+                <div class="flex gap-2">
+                    <button onclick="filterGames('all', this)" class="filter-btn px-6 py-2 border border-black text-[10px] font-bold uppercase hover:bg-black hover:text-white transition filter-active">အားလုံး</button>
+                    <button onclick="filterGames('pc', this)" class="filter-btn px-6 py-2 border border-black text-[10px] font-bold uppercase hover:bg-black hover:text-white transition">PC</button>
+                    <button onclick="filterGames('mobile', this)" class="filter-btn px-6 py-2 border border-black text-[10px] font-bold uppercase hover:bg-black hover:text-white transition">Mobile</button>
+                </div>
+            </div>
+            <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+        </section>
+    </main>
+
+    <div id="gameModal" class="fixed inset-0 bg-black/80 hidden z-[100] flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-3xl max-w-lg w-full relative shadow-2xl">
+            <div id="modalContent"></div>
+        </div>
+    </div>
+    
+    <footer class="bg-black text-white py-12 mt-24">
+        <div class="max-w-7xl mx-auto px-8 text-center">
+            <p class="text-sm mb-4">© 2026 Nexus Vault. All rights reserved.</p>
+            <p class="text-xs text-gray-400">This is a fictional digital store created for demonstration purposes.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        // Added 'link' property to each game object for individual links
+        const gamesData = [
+            { 
+                id: 1, type: 'mobile', title: 'Maneater', size: '5.33 GB', req: 'Android 11+, 8 GB+ RAM', 
+                story: 'Maneater ဆိုတာ ထူးခြားဆန်းသစ်တဲ့ Open-world Action RPG (ShaRkPG) ဂိမ်းတစ်ခုဖြစ်ပြီး ကစားသမားတွေအနေနဲ့ လူသားမဟုတ်ဘဲ ပင်လယ်ရေအောက်က ငါးမန်းတစ်ကောင်နေရာကနေ အော်တိုသရုပ်ဆောင် ကစားရမှာဖြစ်ပါတယ်။ မိခင်ဖြစ်သူကို သတ်သွားတဲ့ ရက်စက်တဲ့ငါးမန်းမုဆိုးကြီးကို ကလဲ့စားချေဖို့ ငါးမန်းပေါက်စလေးဘဝကနေ စတင်ရုန်းကန်ရမှာဖြစ်ပြီး၊ ပင်လယ်ရေသတ္တဝါတွေနဲ့ ကမ်းခြေကလူတွေကို ကိုက်ဖြတ်စားသောက်ရင်း Level မြှင့်တင်ရမှာပါ။ အစာစားရင်း ခန္ဓာကိုယ်ပိုမိုကြီးထွားလာပြီး လျှပ်စစ်စွမ်းအား၊ အဆိပ်နဲ့ သံချပ်ကာအကြေးခွံတွေလို ထူးခြားတဲ့ ဆင့်ကဲပြောင်းလဲမှု (Evolution) စွမ်းရည်တွေကို ခန္ဓာကိုယ်မှာ စိတ်ကြိုက်တပ်ဆင်ကာ ပင်လယ်ပြင်ရဲ့ အဆိုးဆုံးဘုရင်တစ်ကောင်အဖြစ် လွတ်လပ်စွာ သောင်းကျန်းကစားနိုင်မယ့် ဂိမ်းကောင်းတစ်ခု ဖြစ်ပါတယ်။', 
+                img: 'https://upload.wikimedia.org/wikipedia/en/5/5c/Maneater_cover_art.jpg',
+                link: 'https://apkvision.org/games/action/maneater-131789/download/v1.4.4-apk/' // Replace with your specific link
+            },
+            { 
+                id: 2, type: 'mobile', title: 'Grand Theft Auto: San Andreas', size: '2.46 GB', req: 'Android 7.0+, 2 GB RAM', 
+                story: 'Grand Theft Auto: San Andreas ဟာ ဂိမ်းလောကမှာ သမိုင်းတွင်အောင် အောင်မြင်ခဲ့တဲ့ ကမ္ဘာကျော် Open-world Action ဂိမ်းကြီးတစ်ခု ဖြစ်ပါတယ်။ ဇာတ်လိုက်ဖြစ်သူ CJ (Carl Johnson) ဟာ အသတ်ခံလိုက်ရတဲ့ မိခင်အတွက် ကလဲ့စားချေဖို့နဲ့ ပျက်စီးလုနီးပါးဖြစ်နေတဲ့ Grove Street ဂိုဏ်းကို ပြန်လည်ထူထောင်ဖို့ မွေးရပ်မြေ Los Santos မြို့ကို ပြန်လာရာကနေ ဇာတ်လမ်းစတင်မှာပါ။ မြို့ကြီး ၃ မြို့ပါဝင်တဲ့ မြေပုံအကျယ်ကြီးထဲမှာ လွတ်လပ်စွာသွားလာရင်း ကားမောင်း၊ သေနတ်ပစ်၊ ဂိုဏ်းစတားမစ်ရှင်တွေ ဆော့ရုံတင်မကဘဲ မိမိဇာတ်ကောင်ကို အဝတ်အစား၊ ဆံပင်ပုံစံကအစ စိတ်ကြိုက် Customize လုပ်ပြီး လွတ်လပ်မှုအပြည့်နဲ့ ကစားနိုင်တဲ့ ဂိမ်းကောင်းတစ်ခု ဖြစ်ပါတယ်။', 
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY8_A2_IbtGFu2voLss38SaiL4cttYvVYEyEfHb1__eg&s=10',
+                link: 'https://apkvision.org/games/action/grand-theft-auto-san-andreas-apk-106-2824/download/v2.11.311-mod/' // Replace with your specific link
+            },
+            { 
+                id: 3, type: 'mobile', title: 'GTA: Vice City – Definitive', size: '3.48 GB', req: 'Android 11+, 4 GB RAM', 
+                story: 'Grand Theft Auto: Vice City သည် ၁၉၈၀ ပြည့်လွန်နှစ်များ၏ မိုင်ယာမီမြို့ပြအငွေ့အသက်နှင့် ရာဇဝတ်မှုလောကကို အခြေခံထားသည့် ထူးခြားသော Open-world ဂိမ်းတစ်ခုဖြစ်သည်။ ဇာတ်လမ်း၏ အဓိကဇာတ်ကောင် Tommy Vercetti အဖြစ် ကစားရပြီး၊ မူးယစ်ဆေးဝါးအရောင်းအဝယ်တစ်ခုတွင် လှည့်စားခံရပြီးနောက် မိမိ၏ ဂုဏ်သိက္ခာနှင့် အင်ပါယာကို ပြန်လည်တည်ဆောက်ရန် ကြိုးပမ်းရသည့် စိတ်လှုပ်ရှားဖွယ် ဇာတ်လမ်းမျိုးဖြစ်သည်။ နီယွန်မီးရောင်စုံများ၊ ခေတ်ဟောင်းရော့ခ်ဂီတများဖြင့် တန်ဆာဆင်ထားသော မြို့တော်အတွင်း ကားမောင်းခြင်း၊ သေနတ်ပစ်ခြင်းနှင့် အခက်အခဲများကို ကျော်ဖြတ်ကာ မြို့၏အကြီးအကဲဖြစ်လာစေရန် လွတ်လပ်စွာ စိန်ခေါ်ကစားရမည့် ဂိမ်းကောင်းတစ်ခုဖြစ်သည်။', 
+                img: 'https://cdn1.epicgames.com/offer/fd6a13a256014a22a83ff2aaacc30e00/EGS_GrandTheftAutoViceCityTheDefinitiveEdition_RockstarGames_S2_1200x1600-18ac3dd32143492b2650144da0cf0ca9',
+                link: 'https://apkvision.org/games/action/gta-vice-city-definitive-115249/download/v1.90.0-mod/' // Replace with your specific link
+            },
+            { 
+                id: 4, type: 'mobile', title: 'Bully', size: '2.79 GB', req: 'Android, 2 GB+ RAM', 
+                story: 'Bully ဟာ Rockstar Games က ထုတ်လုပ်ခဲ့ပြီး ကျောင်းသားဘဝ အငွေ့အသက်တွေကို ထူးခြားဆန်းသစ်စွာ ခံစားရစေမယ့် လူကြိုက်အလွန်များခဲ့တဲ့ Open-world Action ဂိမ်းတစ်ခု ဖြစ်ပါတယ်။ မိခင်ဖြစ်သူက အတင်းအပ်နှံထားခဲ့လို့ နာမည်ဆိုးနဲ့ကျော်ကြားတဲ့ Bullworth Academy ဘော်ဒါကျောင်းကြီးကို ရောက်ရှိလာတဲ့ လူမိုက်ကျောင်းသားလေး Jimmy Hopkins နေရာကနေ ကစားရမှာပါ။ ကျောင်းတွင်းရှိ အနိုင်ကျင့်တတ်တဲ့ ဂိုဏ်းအုပ်စုအသီးသီးရဲ့ ရန်စမှုတွေ၊ ဆရာ/ဆရာမတွေရဲ့ ချုပ်ချယ်မှုတွေကြားထဲကနေ အတန်းမှန်မှန်တက်ရင်း၊ စက်ဘီးစီး၊ စကိတ်စီးကာ ကျောင်းသားအချင်းချင်း ဆေးထိုးနောက်ပြောင်တဲ့ မစ်ရှင်မျိုးစုံကို လွတ်လပ်စွာ လုပ်ဆောင်ရမှာ ဖြစ်ပါတယ်။ အနိုင်ကျင့်ခံရတဲ့ ကျောင်းသားတွေကို ကာကွယ်ပေးရင်း ကျောင်းတစ်ကျောင်းလုံးရဲ့ အကြီးအကဲဖြစ်လာအောင် လှည့်ပတ်ကစားရမယ့် အလွန်ဆော့လို့ကောင်းတဲ့ ဂိမ်းဟောင်းကြီးတစ်ခု ဖြစ်ပါတယ်။', 
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBciChk2H0LL9-sl8hlBSNu9i_v_0eB8a83AVHhWNYS_vOeQGmKOenikE&s=10',
+                link: 'https://apkvision.org/games/action/bullyanniversaryeditionsapk-54560/download/v1.4.311-mod/' // Replace with your specific link
+            },
+            { 
+                id: 5, type: 'mobile', title: 'Red Dead Redemption', size: '7.4 GB', req: 'Android, 4 GB+ RAM', 
+                story: 'Red Dead Redemption ဟာ Rockstar Games က ထုတ်လုပ်ထားပြီး ကောင်းဘွိုင်ခေတ် အငွေ့အသက်တွေကို အပြည့်အဝခံစားရစေမယ့် ကမ္ဘာကျော် Open-world Action-Adventure ဂိမ်းကြီးတစ်ခု ဖြစ်ပါတယ်။ မိသားစုကို ဓားစာခံအဖြစ် ဖမ်းဆီးခြင်းခံထားရတဲ့ ကောင်းဘွိုင်လူဆိုးဟောင်း John Marston နေရာကနေ ကစားရမှာဖြစ်ပြီး၊ မိသားစုနဲ့ ပြန်လည်ဆုံဆည်းခွင့်ရဖို့အတွက် သူ့ရဲ့ဂိုဏ်းသားဟောင်းတွေကို တစ်ယောက်မကျန် လိုက်လံဖမ်းဆီးနှိမ်နင်းရမယ့် ရင်သပ်ရှုမောဖွယ် ဇာတ်လမ်းမျိုး ဖြစ်ပါတယ်။ တောတောင်သဲကန္တာရ မြေပုံအကျယ်ကြီးထဲမှာ မြင်းစီး၊ သေနတ်ပစ်၊ ရာဇဝတ်ကောင်တွေကို လိုက်လံဖမ်းဆီးတဲ့ ကောင်းဘွိုင်မစ်ရှင်တွေကို လွတ်လပ်မှုအပြည့်နဲ့ ဆော့ကစားရမှာဖြစ်ပြီး၊ အခုအခါမှာတော့ ဒီစက်ကြီးဂိမ်းကို Android ဖုန်းပေါ်မှာပါ အဆင်ပြေပြေ ဒေါင်းလုဒ်ဆွဲပြီး ကောင်းဘွိုင်တစ်ယောက်လို ကြမ်းလို့ရအောင် ဖန်တီးပေးထားတဲ့ ဂိမ်းကောင်းတစ်ခု ဖြစ်ပါတယ်။', 
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8yviPXlDDn9thtV1c6x-4xrBHXuGZDpe2xJkVyHP95g&s=10',
+                link: 'https://apkvision.org/games/action/red-dead-redemption-28496/download/v1.58.63226194-mod/' // Replace with your specific link
+            },
+            { 
+                id: 6, type: 'mobile', title: 'GTA III – Definitive', size: '1.63 GB', req: 'Android 11+, 4 GB+ RAM', 
+                story: 'Grand Theft Auto III – The Definitive Edition သည် ဂိမ်းလောကကို ပြောင်းလဲစေခဲ့သော 3D Open-world အတွေ့အကြုံကို ခေတ်မီဂရပ်ဖစ်နည်းပညာများနှင့်အတူ ပြန်လည်အသက်သွင်းထားသည့် ဂိမ်းတစ်ခုဖြစ်သည်။ ဇာတ်လိုက် Claude ၏ ရှုထောင့်မှနေ၍ လွတ်လပ်မှုအပြည့်ရှိသော Liberty City မြို့တော်ကြီးထဲတွင် ရာဇဝတ်မှုလောက၏ လှည့်ကွက်များ၊ စိတ်လှုပ်ရှားဖွယ် မစ်ရှင်များနှင့် အန္တရာယ်များသည့်ဂိုဏ်းများကို ဖြတ်ကျော်ရမည်ဖြစ်သည်။ ခေတ်သစ်ဂိမ်းကစားဟန် (Modernized Controls) နှင့် ပိုမိုကြည်လင်တောက်ပသော မြင်ကွင်းများကြောင့် မူလဂန္ထဝင်ဂိမ်း၏ စွဲမက်ဖွယ်ကောင်းမှုများကို ယနေ့ခေတ်နည်းပညာဖြင့် ထပ်မံခံစားနိုင်မည်ဖြစ်ပြီး၊ ကားမောင်းခြင်း၊ သေနတ်ပစ်ခြင်းနှင့် မြို့တော်၏အကြီးအကဲအဖြစ် လမ်းလျှောက်လှမ်းရမည့် လမ်းကြောင်းများမှာ ယခင်ကထက် ပိုမိုထိမိပြီး စိတ်လှုပ်ရှားဖွယ်ကောင်းနေမည်ဖြစ်သည်။',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEp0LlY8K-mxq2Kwad6ZS8J0kg16vc701uoMYEjMtyzA&s=10',
+                link: 'https://apkvision.org/games/action/gta-iii-definitive-115254/download/v1.84.3-mod/' // Replace with your specific link
+            },
+            { 
+                id: 7, type: 'moobile', title: 'Prince of Persia: Lost Crown', size: '2.06 GB', req: 'Android 7+, 4 GB+ RAM', 
+                story: 'ဇာတ်လမ်းအကျဉ်း - ပြန်ပေးဆွဲခံလိုက်ရတဲ့ မင်းသား Ghassan ကို ကယ်တင်ဖို့အတွက် ကျိန်စာသင့်နေပြီးအချိန်တွေကမောက်ကမဖြစ်နေတဲ့ Mount Qaf ဆိုတဲ့ ရှေးဟောင်းမြို့တော်ကြီးဆီ Sargon တို့အဖွဲ့ သွားရောက်ရတဲ့ စွန့်စားခန်းဖြစ်ပါတယ်။',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ7vzpmSi3AaLx8CEOegSCnIDQxa8CA3yVmA&s',
+                link: 'https://apkvision.org/games/adventure/prince-of-persia-lost-crown-128858/download/v1.1.9-mod/' // Replace with your specific link
+            },
+            { 
+                id: 8, type: 'mobile', title: 'Outbound Travelling Simulator', size: '111.07 MB', req: 'Android 8+, 4 GB RAM', 
+                story: 'ကိုယ်ပိုင်ဒီဇိုင်းဖြင့် ပြုလုပ်ထားသော ဗန်ကားတစ်စီးကို မောင်းနှင်နေရသည့် ခံစားချက်တွင်သာ တွေ့ရမည့် ထူးခြားသည့် လွတ်လပ်မှုမျိုးရှိပါသည်။ မြေပုံတစ်ခုနှင့် နေဝင်ချိန်တွင် ပြောင်းလဲနေသည့် ကောင်းကင်ယံကိုသာ ကြည့်ရင်း ခရီးနှင်ရသည့် ခံစားချက်မျိုးဖြစ်သည်။ Outbound Travelling Simulator ဂိမ်းသည် ထိုကဲ့သို့သော ခရီးသွားလိုသည့် စိတ်ဆန္ဒကို ဖော်ဆောင်ပေးထားပြီး၊ နေ့စဉ်ဘဝ၏ ရှုပ်ထွေးမှုများကို ဖယ်ရှားကာ အပြင်လောကနှင့် ကင်းကွာပြီး ကိုယ်ပိုင်ဘဝကို တည်ဆောက်ရသည့် ပီတိကို ခံစားရစေမည်ဖြစ်သည်။ ကားအတွင်းပိုင်းကို နေရာလွတ် အကျိုးရှိရှိအသုံးပြုနိုင်ရန် စနစ်တကျ ပြင်ဆင်ခြင်းဖြစ်စေ၊ ညအိပ်ရန်အတွက် အကောင်းဆုံးနေရာကို ရှာဖွေခြင်းဖြစ်စေ၊ ဗန်ကားဖြင့် ဘဝကို ဖြတ်သန်းခြင်း (Van Life) အိပ်မက်ကို လက်တွေ့ဆန်ဆန် ဖော်ဆောင်ပေးပါသည်။ ဤသည်မှာ ခရီးဆုံးနေရာတစ်ခုကို ရောက်ရှိဖို့အတွက်သာ မဟုတ်ဘဲ၊ ကားတစ်စီးကို မိမိစိတ်ကြိုက် သက်သောင့်သက်သာရှိသော နေရာလေးတစ်ခုအဖြစ် ပြောင်းလဲလိုက်ရသည့်အတွက် ရရှိလာမည့် တိတ်ဆိတ်ငြိမ်းချမ်းသော ကျေနပ်မှုကို ရရှိစေမည်ဖြစ်ပြီး၊ နောက်ထပ်စွန့်စားခန်းများအတွက် အသင့်ရှိနေစေမည့် ခရီးတစ်ခုပင် ဖြစ်ပါသည်။',
+                img: 'https://play-lh.googleusercontent.com/Qr7YfYrakiUbmfqlZErFyXAqoxD7tiQ6rqDO9e6I6HUmflAWFns7gbTOgaghhST125qbrzvvcLK8qcLJ3Lc9',
+                link: 'https://apkvision.org/games/simulation/outbound-travelling-simulator-133400/download/v1.0-apk/' // Replace with your specific link
+            },
+            { 
+                id: 9, type: 'mobile', title: 'Car x Drift Racing 2', size: '2.23 GB', req: 'Android 6+, 2 GB+ RAM', 
+                story: 'CarX Drift Racing 2 သည် ကားမောင်းခြင်းနှင့် Drift Racing အားကစားကို အပြည့်အဝခံစားနိုင်စေမည့် ထူးခြားသော Racing ဂိမ်းတစ်ခုဖြစ်သည်။ ကစားသမားများသည် မိမိတို့၏ကားများကို စိတ်ကြိုက် Customize လုပ်နိုင်ပြီး၊ လမ်းကြောင်းအမျိုးမျိုးတွင် Drift Racing ပြိုင်ပွဲများတွင် ပါဝင်ကစားနိုင်သည်။ ဂိမ်းတွင် ကားမောင်းခြင်း၊ Drift စွမ်းရည်မြှင့်တင်ခြင်းနှင့် အခြားသော လုပ်ဆောင်ချက်များ ပါဝင်သည်။',
+                img: 'https://play-lh.googleusercontent.com/rEUojqT8_SdZHq-LzhH4l0edsEmxlYSSzAspLTyODR3vJ3KpvmlpnmD9CJqklrEaYMXG-omA59adgNRNcHG5yA',
+                link: 'https://an1.com/file_5244-dw.html' // Replace with your specific link
+            },
+            { 
+                id: 10, type: 'mobile', title: 'Stardew Valley', size: '500 MB', req: 'Android 5+, 2 GB+ RAM', 
+                story: 'Stardew Valley သည် စိုက်ပျိုးရေးနှင့် စီးပွားရေး Simulation ဂိမ်းတစ်ခုဖြစ်ပြီး၊ ကစားသမားများသည် မိမိတို့၏စိုက်ပျိုးရေးခြံကို စီမံခန့်ခွဲနိုင်သည်။ ဂိမ်းတွင် စိုက်ပျိုးခြင်း၊ တောထဲသို့ သွားရောက်ခြင်း၊ တိုက်ခိုက်မှုများနှင့် အခြားသော လုပ်ဆောင်ချက်များ ပါဝင်သည်။',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcqHdYh-E2kXt8La0P7zz4AQKcM6RSi41zdw&s',
+                link: 'https://apkvision.org/games/role-playing/stardew-valley-40176/download/v1.6.15.3-mod/' // Replace with your specific link
+            },
+            { 
+                id: 11, type: 'mobile', title: 'Hollow Knight: Silksong', size: '1.81 GB', req: 'Android 6+, 4 GB+ RAM', 
+                story: 'Hollow Knight: Silksong ဟာ တစ်ကမ္ဘာလုံးက စိတ်လှုပ်ရှားစွာ မျှော်လင့်နေကြတဲ့ အလွန်နာမည်ကြီးလှတဲ့ 2D Metroidvania Action-Adventure ဂိမ်းကြီးတစ်ခု ဖြစ်ပါတယ်။ ကစားသမားတွေအနေနဲ့ ပိုးချည်မျှင်နဲ့ အပ်ကို လက်နက်အဖြစ် အသုံးပြုပြီး တိုက်ခိုက်တတ်တဲ့ လျင်မြန်ဖြတ်လတ်လွန်းတဲ့ စစ်သည်တော်မလေး Hornet နေရာကနေ အဓိက သရုပ်ဆောင် ကစားရမှာပါ။ ပိုးမျှင်တွေနဲ့ သီချင်းသံစဉ်တွေ လွှမ်းမိုးချုပ်ကိုင်ထားတဲ့ ဆန်းကြယ်ပြီး အန္တရာယ်များတဲ့ "Pharloom" တိုင်းပြည်သစ်ကြီးထဲမှာ ရန်သူနဲ့ အကောင်ကြီး (Boss) အသစ်ပေါင်းစုံကို ရင်ဆိုင်တိုက်ခိုက်ရင်း၊ တိုင်းပြည်ရဲ့ အမြင့်ဆုံးကုန်းမြင့်ဆီကို ရောက်အောင် ဆန်းသစ်လှပတဲ့ ကျွမ်းဘားကွက်စွမ်းရည်တွေ၊ ထောင်ချောက်တွေနဲ့ စိန်ခေါ်မှုမျိုးစုံကို လှည့်ပတ်ဖြေရှင်းရမှာ ဖြစ်ပါတယ်။ အခုအခါမှာတော့ ဒီထူးခြားဆန်းပြားတဲ့ လျှို့ဝှက်ဆန်းကြယ်ကမ္ဘာကြီးထဲမှာ စွန့်စားခန်းဖွင့်နိုင်ဖို့အတွက် Android ဖုန်းပေါ်မှာပါ အဆင်ပြေပြေ ကစားနိုင်အောင် ဖန်တီးပေးထားတဲ့ ဂိမ်းကောင်းတစ်ခု ဖြစ်ပါတယ်။',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShYgZWXB-rdYoX6xZxbt2sklkIDs4QMgE9fw&s',
+                link: 'https://apkvision.org/games/action/hollow-knight-silksong-130787/download/v1.2.0-mod/' // Replace with your specific link
+            },
+            { 
+                id: 12, type: 'mobile', title: 'Human: Fall Flat', size: '762.34 GB', req: 'Android 5+, 1.5 GB+ RAM', 
+                story: 'Human: Fall Flat APK သည် ရူပဗေဒသဘောတရားများအပေါ် အခြေခံတည်ဆောက်ထားသည့် ထူးခြားသော simulator ဂိမ်းတစ်ခု ဖြစ်ပါသည်။ ဂိမ်းထဲတွင် သင်သည် ဘော့ဘ် (Bob) အမည်ရသည့် ကိုးရိုးကားရားနိုင်သော ဇာတ်ကောင်လေးကို ကူညီပေးရမည်ဖြစ်သည်။ ဘော့ဘ် အိပ်ပျော်သွားပြီး ထူးဆန်းသော အိပ်မက်တစ်ခု မက်ရာမှ ဂိမ်းကို စတင်ပါသည်။ သူသည် အောက်ဘက်သို့ အဆက်မပြတ် ပြုတ်ကျနေပြီး လမ်းခရီးတွင် အတားအဆီး အမျိုးမျိုးနှင့် ရင်ဆိုင်ရမည်ဖြစ်သည်။ သင်သည် ပဟေဠိများစွာကို ဖြေရှင်းရမည်ဖြစ်ပြီး၊ ပဟေဠိတစ်ခုချင်းစီကို နည်းလမ်းအမျိုးမျိုးဖြင့် ဖြေရှင်းနိုင်သောကြောင့် အရာအားလုံးသည် သင့်အပေါ်တွင်သာ မူတည်ပါသည်။ အရာဝတ္ထုများကို ရွှေ့ပြောင်းပါ၊ သို့သော် အမှားတစ်စုံတစ်ရာ ရှိပါက သင့်ဇာတ်ကောင်သည် ဂိမ်းအစသို့ ပြန်လည်ရောက်ရှိသွားမည်ဖြစ်၍ ဂရုစိုက်ပါ။ ဤထူးဆန်းသော အိပ်မက်ကို အဆုံးသတ်ရန်အတွက် သင်သည် လမ်းဆုံးတိုင်အောင် သွားနိုင်မည်လား?',
+                img: 'https://play-lh.googleusercontent.com/ZYbrqZoVFza3xboFdUVcGB1k-ZHjzwZqVKMuECr4Mq958IG4-X-ZKi1QkHndmztdLgmUMo11zu7JN5HQ51yB6w',
+                link: 'https://apkvision.org/games/adventure/human-fall-flat-apk-2-39274/download/v2.6-apk/' // Replace with your specific link
+            }
+
+        ];
+
+        function filterGames(type, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-active'));
+            if(btn) btn.classList.add('filter-active');
+            
+            const grid = document.getElementById('games-grid');
+            const filtered = type === 'all' ? gamesData : gamesData.filter(g => g.type === type);
+            
+            grid.innerHTML = filtered.map(g => `
+                <div class="card p-8 rounded-3xl flex items-center gap-8" onclick="openModal(${g.id})">
+                    <img src="${g.img}" class="w-24 h-24 object-cover rounded-2xl" alt="${g.title}">
+                    <div>
+                        <h3 class="font-bold text-sm uppercase mb-1">${g.title}</h3>
+                        <p class="text-[11px] text-gray-500 uppercase tracking-widest">ဖိုင်ဆိုဒ်: ${g.size}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(id) {
+            const game = gamesData.find(g => g.id === id);
+            document.getElementById('modalContent').innerHTML = `
+                <h3 class="font-bold text-2xl uppercase mb-2">${game.title}</h3>
+                <p class="text-xs text-gray-400 mb-4 uppercase">ဖိုင်ဆိုဒ်: ${game.size} | လိုအပ်ချက်: ${game.req}</p>
+                <p class="text-gray-600 mb-6 text-sm leading-relaxed">${game.story}</p>
+                <div class="flex gap-4">
+                    <!-- The href now uses the individual game.link property -->
+                    <a href="${game.link}" target="_blank" class="flex-1 bg-black text-white text-center py-3 rounded-full font-bold uppercase text-xs hover:bg-gray-800 transition">Download ရယူရန်</a>
+                    <button onclick="closeModal()" class="flex-1 bg-gray-100 text-gray-600 py-3 rounded-full font-bold uppercase text-xs hover:bg-gray-200 transition">ပိတ်မည်</button>
+                </div>
+            `;
+            document.getElementById('gameModal').classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('gameModal').classList.add('hidden'); }
+        
+        // Initial render
+        filterGames('all');
+    </script>
+</body>
+</html>
