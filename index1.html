@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="my" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Vault | Premium CD Keys</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@300;400;700&display=swap');
+        body { font-family: 'Pyidaungsu', sans-serif; background-color: #ffffff; color: #1a1a1a; overflow-x: hidden; }
+        
+        .hero-full { 
+            height: 100vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1600'); 
+            background-size: cover; 
+            background-position: center; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        .product-card { transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); border: 1px solid #f4f4f4; }
+        .product-card:hover { transform: scale(1.05); border-color: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 p-6">
+        <a href="index.html" class="bg-black text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition shadow-lg">
+            <i class="fa-solid fa-arrow-left mr-2"></i> ပင်မသို့
+        </a>
+    </header>
+
+    <!-- Full Screen Hero -->
+    <section class="hero-full text-center text-white p-6">
+        <div data-aos="fade-up" data-aos-duration="1200">
+            <h1 class="text-7xl md:text-9xl font-black uppercase tracking-tighter mb-6">CD KEYS</h1>
+            <p class="text-sm uppercase tracking-widest text-gray-400 mb-8 italic">We offer premium CD keys for your favorite games.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-24">
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Product Cards with AOS -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-20">
+        <div class="max-w-7xl mx-auto px-8 text-center" data-aos="fade-in">
+            <p class="text-sm tracking-widest uppercase mb-4">© 2026 Nexus Vault</p>
+            <p class="text-xs text-gray-500 uppercase">Premium Digital Store</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        const products = [
+            { title: 'ELDEN RING', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500' },
+            { title: 'CYBERPUNK 2077', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500' },
+            { title: 'GTA V', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=500' },
+            { title: 'RED DEAD 2', img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=500' }
+        ];
+
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = products.map((p, index) => `
+            <div class="product-card p-4 rounded-3xl flex flex-col items-center bg-white" data-aos="zoom-in" data-aos-delay="${index * 100}">
+                <img src="${p.img}" class="w-full aspect-square object-cover rounded-2xl mb-4" alt="${p.title}">
+                <h3 class="font-bold uppercase text-[12px] tracking-widest mb-6 text-center">${p.title}</h3>
+                <a href="https://t.me/YourTelegramLink" target="_blank" 
+                   class="w-full bg-black text-white py-4 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-gray-800 transition transform hover:scale-105">
+                   <i class="fa-brands fa-telegram text-lg"></i> ဝယ်ယူရန်
+                </a>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>
